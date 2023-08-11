@@ -1,7 +1,7 @@
 <template>
     <div>
     <el-container>
-        <el-aside width="200px">
+        <el-aside width=auto>
             <!-- 最后要加上斜杠 -->
             <common-aside />
         </el-aside>
@@ -11,6 +11,7 @@
                 </el-header>
                 <el-main>
                     <router-view></router-view>
+                    
                 </el-main>
             </el-container>
     </el-container>

@@ -7,7 +7,8 @@
         text-color="#fff"
         active-text-color="#ffd04b"
         :router="true">
-            <h3>通用后台管理系统</h3>
+                   <!-- 三元表达式 -->
+            <h3>{{isCollapse ? '后台' : '通用后台管理系统'}}</h3>
             <el-menu-item   v-for="item in noChildren" @click="printPath(item)"
             :key="item.name" :index="item.path" >
                 <!-- 动态绑定（v-bind），同时使用模板字符串 -->
@@ -49,6 +50,9 @@
 
 .el-menu{
     height: 100vh;
+    
+    //有细线边框基本和border有关
+    border-right: none;
     h3 {
         color: white;
         text-align: center;
