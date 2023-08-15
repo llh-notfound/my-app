@@ -9,7 +9,7 @@
         :router="true">
                    <!-- 三元表达式 -->
             <h3>{{isCollapse ? '后台' : '通用后台管理系统'}}</h3>
-            <el-menu-item   v-for="item in noChildren" @click="printPath(item)"
+            <el-menu-item   v-for="item in noChildren" @click="clickMenu(item)"
             :key="item.name" :index="item.path" >
                 <!-- 动态绑定（v-bind），同时使用模板字符串 -->
                 <i :class="`el-icon-${item.icon}`"></i>
@@ -22,7 +22,7 @@
                 </template>
                 <el-menu-item-group v-for="subchildren in item.children" :key="subchildren.name">
                     <!-- 记得动态绑定要用: !!! -->
-                    <el-menu-item  
+                    <el-menu-item  @click="clickMenu(subchildren)"
                     :index="subchildren.path">
                         {{ subchildren.label }}
                     </el-menu-item>
@@ -130,10 +130,12 @@ export default {
 
             //判断如果跳转路由与当前路由相同则不发生跳转  否则会报错
             //但是更好的方法是直接配置element-ui的<el-menu>整个大的字段的router属性
-            if(this.route.path !== item.path && 
-            (this.route.path === '/home') && (item.path === '/')){
-                this.$router.push(item.path);
-            }
+            // if(this.route.path !== item.path && 
+            // (this.route.path === '/home') && (item.path === '/')){
+            //     this.$router.push(item.path);
+            // }
+            
+            this.$store.commit('selectMenu', item)
         },
         //测试输出
         printPath(item) {

@@ -2,7 +2,14 @@
     <div class="header-container">
         <div class="l-content">
             <el-button @click="tabAside" icon="el-icon-menu" size="mini"></el-button>
-            <span class="text">首页</span>
+            <el-breadcrumb separator="/">
+                <!-- <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+                <el-breadcrumb-item>活动列表</el-breadcrumb-item> -->
+                <el-breadcrumb-item v-for="item in tags" :key="item.path" :to="{ path : item.path }">
+                    {{ item.label }}
+                </el-breadcrumb-item>
+            </el-breadcrumb>
         </div>
         <div class="r-content">
             <el-dropdown>
@@ -20,6 +27,7 @@
 
 
 <script>
+import { mapState } from 'vuex';
     export default {
         data(){
             return{
@@ -30,11 +38,23 @@
             tabAside(){
                 this.$store.commit('collapseMenu')
             }
+        },
+        computed:{
+            ...mapState({
+                 tags: state => state.tab.tabsList
+            })
+        },
+        mounted(){
+            console.log(this.tags,'tags')
         }
     }
 </script>
 
 <style lang="less" scoped>
+
+.el-button{
+    margin-right: 20px;
+}
 .header-container {
     padding: 0 20px;
     background-color: #333;
