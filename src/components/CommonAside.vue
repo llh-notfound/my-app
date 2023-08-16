@@ -42,29 +42,7 @@
     </div>
 </template>
 
-<style lang="less" scoped>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-}
 
-.el-menu{
-    height: 100vh;
-    
-    //有细线边框基本和border有关
-    border-right: none;
-    h3 {
-        color: white;
-        text-align: center;
-        line-height: 48px;
-        font-size: 16px;
-        font-weight: 400;
-    }
-}
-
-
-
-</style>
   
 <script>
 export default {
@@ -134,7 +112,6 @@ export default {
             // (this.route.path === '/home') && (item.path === '/')){
             //     this.$router.push(item.path);
             // }
-            
             this.$store.commit('selectMenu', item)
         },
         //测试输出
@@ -159,3 +136,27 @@ export default {
     }
 }
 </script>
+
+<style lang="less" scoped>
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+}
+
+.el-menu{
+    height: 100vh;
+    
+    //有细线边框基本和border有关
+    border-right: none;
+    h3 {
+        color: white;
+        text-align: center;
+        line-height: 48px;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+
+
+</style>

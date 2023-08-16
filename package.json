@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "echarts": "^5.1.2",
     "element-ui": "^2.15.13",
+    "http-server": "^14.1.1",
     "less": "^4.1.2",
     "less-loader": "^6.0.0",
     "mockjs": "^1.1.0",
@@ -41,7 +42,10 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "no-debugger":"off",
+      "no-console":"off"
+    }
   },
   "browserslist": [
     "> 1%",
