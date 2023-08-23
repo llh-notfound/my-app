@@ -8,7 +8,7 @@
         active-text-color="#ffd04b"
         :router="true">
                    <!-- 三元表达式 -->
-            <h3>{{isCollapse ? '后台' : '通用后台管理系统'}}</h3>
+            <h3>{{isCollapse ? '南方+' : '南方+订阅号列表'}}</h3>
             <el-menu-item   v-for="item in noChildren" @click="clickMenu(item)"
             :key="item.name" :index="item.path" >
                 <!-- 动态绑定（v-bind），同时使用模板字符串 -->
@@ -58,39 +58,12 @@ export default {
                     url: 'Home/Home'
                 },
                 {
-                    path: '/mall',
-                    name: 'mall',
-                    label: '商品管理',
-                    icon: 'video-play',
-                    url: 'MallManage/MallManage'
-                },
-                {
                     path: '/user',
                     name: 'user',
-                    label: '用户管理',
-                    icon: 'user',
+                    label: '订阅号查询',
+                    icon: 'reading',
                     url: 'UserManage/UserManage'
                 },
-                {
-                    label: '其他',
-                    icon: 'location',
-                    children: [
-                        {
-                            path: '/page1',
-                            name: 'page1',
-                            label: '页面1',
-                            icon: 'setting',
-                            url: 'Other/PageOne'
-                        },
-                        {
-                            path: '/page2',
-                            name: 'page2',
-                            label: '页面2',
-                            icon: 'setting',
-                            url: 'Other/PageTwo'
-                        }
-                    ]
-                }
             ]
         };
     },

@@ -40,6 +40,13 @@
         <el-button @click="handleAdd" type="primary">
           +新增
         </el-button>
+        <template>
+        <el-input
+          style="width: 400px;"
+          v-model="search"
+          size="mini"
+          placeholder="输入ID关键字搜索"/>
+      </template>
       </div>
       <el-table
           height="90%"
@@ -47,12 +54,12 @@
           style="width: 100%">
           <el-table-column
             prop="name"
-            label="姓名"
+            label="ID"
             width="180">
           </el-table-column>
           <el-table-column
             prop="sex"
-            label="性别"
+            label="订阅号名称"
             width="180">
             <template slot-scope="scope">
                 <span>{{ scope.row.sex == 1 ? '男' : '女' }}</span>
@@ -60,15 +67,19 @@
           </el-table-column>
           <el-table-column
             prop="age"
-            label="年龄">
+            label="订阅号描述">
           </el-table-column>
           <el-table-column
             prop="birth"
-            label="出生日期">
+            label="订阅号状态">
           </el-table-column>
           <el-table-column
             prop="addr"
-            label="地址">
+            label="新增日期">
+          </el-table-column>
+          <el-table-column
+            prop=""
+            label="修改日期">
           </el-table-column>
           <el-table-column
               prop="addr"
@@ -79,12 +90,16 @@
               </template>
           </el-table-column>
       </el-table>
-      <!-- <div>
+      <div class="">
+        <!-- 事件用@绑定！！！ -->
         <el-pagination
           layout="prev, pager, next"
-          :total="50">
+          :total="total"
+          
+          @current-change="handlePage">
+
         </el-pagination>
-      </div> -->
+      </div>
     </div>
 </template>
 
@@ -122,7 +137,18 @@ import { getUser, addUser, editUser, delUser } from '../api'
         tableData: [
 
         ],
-        modalType : 0 //0表示新增，1表示编辑
+        mockListData:[
+
+        ],
+        search:'',
+        
+        total: 0,     //用于分页，记录字段的总数
+        modalType : 0, //0表示新增，1表示编辑
+        pageData:{
+          name: '',
+          page : 1,
+          limit : 10
+        }
       }
     },
     methods:{
@@ -192,16 +218,54 @@ import { getUser, addUser, editUser, delUser } from '../api'
         this.dialogVisible = true
       },
       getList(){
-        getUser().then(({data}) => {
-        console.log(data)
-        this.tableData = data.list
+        getUser({params : this.pageData}).then(({data}) => {
+          this.mockListData = data.mockList
+          this.tableData = data.list
+          // console.log(data, 'data')
+          // console.log(this.mockListData, 'mocklist')
+          // console.log('data.count', data.count)
+          // console.log('data.list', data.list)
+          this.total = data.count || 0
+          //this.total = this.filteredData.length
       })
-      }
+      },
+      handlePage(val){
+        console.log(val,'page')
+        this.pageData.page = val
+        this.getList()
+      },
+      
 
     },
     mounted(){
       this.getList()
-    }
+
+    },
+    updated(){
+      //console.log(this.filteredData,'filteredData')
+      console.log(this.tableData,'tableData')
+    },
+    computed:{
+      // 自己写的筛选搜索关键字函数，但是没看到接口已经定义了这个方法,废弃之
+      filteredData(){
+        if(this.search === ''){
+          return this.tableData
+        }else{
+          return this.tableData.filter(item => {
+            return item.name.toLowerCase().includes(this.search.toLowerCase());
+          })
+        }
+      
+      }
+    },
+    watch: {
+        //监视属性，只要search一变化，就把值传给后端接口的参数：对象pageData
+        search(newValue) {
+          this.pageData.name = newValue; // 将搜索框的值赋给 pageData 的 name 字段
+          // 刷新界面
+          this.getList()
+        }
+    },
   }
 </script>
 
